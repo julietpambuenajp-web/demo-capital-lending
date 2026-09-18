@@ -1,0 +1,998 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Demo Capital Lending provides private real estate financing for investors, builders, and developers. (Demo site for illustrative purposes only.)">
+<title>Demo Capital Lending</title>
+<style>
+  :root{
+    --bg:#FAF9F5;
+    --surface:#FFFFFF;
+    --surface-alt:#F1EEE6;
+    --text:#1A2233;
+    --text-muted:#5B6478;
+    --border:#E3DFD3;
+    --navy:#0B1526;
+    --navy-deep:#060A13;
+    --navy-surface:#121D33;
+    --navy-surface-2:#182848;
+    --on-navy:#F4F2E9;
+    --on-navy-muted:#AFB8CE;
+    --gold:#A9853F;
+    --gold-strong:#8A6C31;
+    --gold-soft:rgba(169,133,63,.14);
+    --gold-line:rgba(169,133,63,.4);
+    --focus:#5F7FB4;
+    --shadow-sm:0 1px 2px rgba(11,21,38,.06);
+    --shadow-lg:0 18px 40px rgba(11,21,38,.10);
+    --radius:3px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0D1320;
+      --surface:#141D2E;
+      --surface-alt:#182238;
+      --text:#ECE9DF;
+      --text-muted:#9AA4BC;
+      --border:#293349;
+      --navy:#070B13;
+      --navy-deep:#04070D;
+      --navy-surface:#0F1830;
+      --navy-surface-2:#141F3E;
+      --on-navy:#F4F2E9;
+      --on-navy-muted:#A6AFC6;
+      --gold:#D2AE68;
+      --gold-strong:#E3C480;
+      --gold-soft:rgba(210,174,104,.16);
+      --gold-line:rgba(210,174,104,.45);
+      --shadow-sm:0 1px 2px rgba(0,0,0,.5);
+      --shadow-lg:0 18px 40px rgba(0,0,0,.45);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0D1320;
+    --surface:#141D2E;
+    --surface-alt:#182238;
+    --text:#ECE9DF;
+    --text-muted:#9AA4BC;
+    --border:#293349;
+    --navy:#070B13;
+    --navy-deep:#04070D;
+    --navy-surface:#0F1830;
+    --navy-surface-2:#141F3E;
+    --on-navy:#F4F2E9;
+    --on-navy-muted:#A6AFC6;
+    --gold:#D2AE68;
+    --gold-strong:#E3C480;
+    --gold-soft:rgba(210,174,104,.16);
+    --gold-line:rgba(210,174,104,.45);
+    --shadow-sm:0 1px 2px rgba(0,0,0,.5);
+    --shadow-lg:0 18px 40px rgba(0,0,0,.45);
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{animation-duration:.001ms !important;transition-duration:.001ms !important} }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding-inline:24px}
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  h1,h2,h3,h4{font-family:"Fraunces",Georgia,"Times New Roman",serif;font-weight:500;line-height:1.12;margin:0;text-wrap:balance}
+  p{margin:0}
+  ul{margin:0;padding:0;list-style:none}
+  button{font:inherit}
+  .eyebrow{
+    font-family:"Public Sans",sans-serif;
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold-strong);
+  }
+  :root[data-theme="dark"] .eyebrow, @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .eyebrow{color:var(--gold)} }
+  section{padding-block:clamp(56px,9vw,104px)}
+  .section-head{max-width:680px;margin-bottom:clamp(32px,5vw,56px)}
+  .section-head h2{font-size:clamp(1.8rem,1.3rem + 2vw,2.5rem);margin-top:10px}
+  .section-head p{color:var(--text-muted);margin-top:14px;font-size:1.05rem;max-width:58ch}
+  .center{text-align:center;margin-inline:auto}
+
+  .skip-link{position:absolute;left:12px;top:-48px;background:var(--gold);color:var(--navy-deep);padding:10px 16px;border-radius:var(--radius);font-weight:700;z-index:200;transition:top .15s ease}
+  .skip-link:focus{top:12px}
+
+  :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:14px 26px;border-radius:var(--radius);font-weight:600;font-size:.95rem;
+    text-decoration:none;cursor:pointer;border:1px solid transparent;white-space:nowrap;
+    transition:background-color .15s ease, color .15s ease, border-color .15s ease, transform .1s ease;
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn-gold{background:var(--gold);color:var(--navy-deep);border-color:var(--gold)}
+  .btn-gold:hover{background:var(--gold-strong);border-color:var(--gold-strong)}
+  .btn-outline-light{background:transparent;color:var(--on-navy);border-color:rgba(244,242,233,.4)}
+  .btn-outline-light:hover{border-color:var(--on-navy);background:rgba(244,242,233,.08)}
+  .btn-outline-dark{background:transparent;color:var(--navy);border-color:var(--border)}
+  :root[data-theme="dark"] .btn-outline-dark, @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn-outline-dark{color:var(--text);border-color:var(--border)}}
+  .btn-outline-dark:hover{border-color:var(--gold);color:var(--gold-strong)}
+  .btn-block{width:100%}
+  .btn[disabled]{opacity:.6;cursor:not-allowed}
+
+  /* ---------- Header ---------- */
+  header.site{
+    position:sticky;top:env(safe-area-inset-top,0px);z-index:100;
+    background:color-mix(in srgb, var(--navy) 92%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(244,242,233,.08);
+  }
+  .nav-row{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-block:16px}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--on-navy)}
+  .brand-mark{width:30px;height:30px;flex:none}
+  .brand-name{font-family:"Fraunces",serif;font-weight:600;font-size:1.08rem;letter-spacing:.01em}
+  .brand-name em{font-style:normal;color:var(--gold)}
+  nav#primary-nav{display:flex;align-items:center;gap:clamp(16px,2vw,32px)}
+  nav#primary-nav a{
+    color:var(--on-navy-muted);text-decoration:none;font-size:.92rem;font-weight:500;
+    padding-block:6px;border-bottom:1px solid transparent;transition:color .15s ease,border-color .15s ease;
+  }
+  nav#primary-nav a:hover{color:var(--on-navy);border-color:var(--gold-line)}
+  .nav-actions{display:flex;align-items:center;gap:18px}
+  .nav-toggle-input{position:absolute;opacity:0;pointer-events:none}
+  .nav-toggle-btn{
+    display:none;width:40px;height:40px;border-radius:var(--radius);border:1px solid rgba(244,242,233,.25);
+    align-items:center;justify-content:center;cursor:pointer;background:transparent;flex:none;
+  }
+  .nav-toggle-btn svg{width:18px;height:18px;stroke:var(--on-navy)}
+
+  @media (max-width: 860px){
+    nav#primary-nav{
+      position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;
+      background:var(--navy-deep);border-bottom:1px solid rgba(244,242,233,.1);
+      max-height:0;overflow:hidden;transition:max-height .25s ease;
+    }
+    nav#primary-nav a{padding:16px 24px;border-bottom:1px solid rgba(244,242,233,.06)}
+    .nav-toggle-btn{display:inline-flex}
+    .nav-toggle-input:checked ~ nav#primary-nav{max-height:420px}
+    .nav-actions .btn-gold{display:none}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;background:var(--navy);color:var(--on-navy);overflow:hidden;
+    padding-block:clamp(72px,12vw,132px);
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(1100px 480px at 82% -10%, rgba(169,133,63,.16), transparent 60%),
+      radial-gradient(700px 400px at 8% 110%, rgba(169,133,63,.10), transparent 55%);
+    pointer-events:none;
+  }
+  .hero-grid{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+  @media (max-width:920px){ .hero-grid{grid-template-columns:1fr} }
+  .hero-copy h1{font-size:clamp(2.4rem,1.7rem + 3vw,3.8rem);letter-spacing:-.01em}
+  .hero-copy .eyebrow{display:block;margin-bottom:16px}
+  .hero-copy p.lede{margin-top:20px;font-size:1.15rem;color:var(--on-navy-muted);max-width:46ch}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+  .hero-note{margin-top:22px;font-size:.85rem;color:var(--on-navy-muted)}
+  .hero-art{position:relative}
+  .hero-art svg{width:100%;height:auto}
+
+  .stat-strip{position:relative;border-top:1px solid rgba(244,242,233,.1);margin-top:clamp(48px,7vw,84px);padding-top:28px;
+    display:flex;flex-wrap:wrap;gap:28px 48px;}
+  .stat{display:flex;flex-direction:column;gap:4px}
+  .stat b{font-family:"Fraunces",serif;font-size:1.15rem;color:var(--on-navy);font-weight:500}
+  .stat span{font-size:.82rem;color:var(--on-navy-muted)}
+
+  /* ---------- Financing cards ---------- */
+  .card-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  @media (max-width:980px){ .card-grid{grid-template-columns:1fr 1fr} }
+  @media (max-width:560px){ .card-grid{grid-template-columns:1fr} }
+  .fcard{
+    display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);height:100%;
+  }
+  .fcard-art{aspect-ratio:4/3;background:linear-gradient(160deg,var(--navy-surface),var(--navy-surface-2));display:flex;align-items:center;justify-content:center}
+  .fcard-art svg{width:56%;height:56%}
+  .fcard-body{padding:22px 22px 26px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .fcard-goldline{width:34px;height:2px;background:var(--gold)}
+  .fcard-body h3{font-size:1.18rem}
+  .fcard-body p{color:var(--text-muted);font-size:.94rem;flex:1}
+  .fcard-cta{
+    align-self:flex-start;margin-top:4px;font-size:.86rem;font-weight:600;color:var(--gold-strong);
+    text-decoration:none;display:inline-flex;align-items:center;gap:6px;background:none;border:none;padding:0;cursor:pointer;
+    font-family:inherit;
+  }
+  :root[data-theme="dark"] .fcard-cta, @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .fcard-cta{color:var(--gold)}}
+  .fcard-cta svg{width:13px;height:13px;transition:transform .15s ease}
+  .fcard-cta:hover svg{transform:translateX(3px)}
+
+  /* ---------- How it works ---------- */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+  @media (max-width:900px){ .steps{grid-template-columns:1fr 1fr;row-gap:36px} }
+  @media (max-width:560px){ .steps{grid-template-columns:1fr} }
+  .step{padding-right:24px;position:relative}
+  .step:not(:last-child)::after{
+    content:"";position:absolute;top:22px;right:0;width:24px;height:1px;background:var(--gold-line);
+  }
+  @media (max-width:900px){ .step:not(:last-child)::after{display:none} }
+  .step-num{font-family:"IBM Plex Mono",monospace;font-size:.85rem;color:var(--gold-strong);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+  :root[data-theme="dark"] .step-num, @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .step-num{color:var(--gold)}}
+  .step h3{font-size:1.08rem;margin-top:14px}
+  .step p{margin-top:10px;color:var(--text-muted);font-size:.93rem}
+
+  /* ---------- About / dark band ---------- */
+  .band{background:var(--navy);color:var(--on-navy)}
+  .band .section-head p{color:var(--on-navy-muted)}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  @media (max-width:880px){ .about-grid{grid-template-columns:1fr;gap:32px} }
+  .about-grid p{color:var(--on-navy-muted);font-size:1.02rem;margin-bottom:16px}
+  .about-points{display:flex;flex-direction:column;gap:16px}
+  .about-point{display:flex;gap:14px;align-items:flex-start}
+  .about-point svg{width:20px;height:20px;flex:none;margin-top:3px;stroke:var(--gold)}
+  .about-point b{display:block;color:var(--on-navy);font-weight:600;font-size:.98rem}
+  .about-point span{color:var(--on-navy-muted);font-size:.9rem}
+
+  /* ---------- Why choose us ---------- */
+  .feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  @media (max-width:900px){ .feature-grid{grid-template-columns:1fr 1fr} }
+  @media (max-width:520px){ .feature-grid{grid-template-columns:1fr} }
+  .feature{padding:26px 22px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}
+  .feature svg{width:26px;height:26px;stroke:var(--gold-strong)}
+  :root[data-theme="dark"] .feature svg, @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .feature svg{stroke:var(--gold)}}
+  .feature h3{font-size:1.02rem;margin-top:16px}
+  .feature p{margin-top:8px;color:var(--text-muted);font-size:.9rem}
+
+  /* ---------- Project types ---------- */
+  .types-list{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  @media (max-width:640px){ .types-list{grid-template-columns:1fr} }
+  .type-row{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:20px 22px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);
+  }
+  .type-row span{font-weight:600;font-family:"Fraunces",serif;font-size:1.02rem}
+  .type-row svg{width:18px;height:18px;stroke:var(--gold-strong);flex:none}
+
+  /* ---------- Contact / form ---------- */
+  .contact{background:var(--surface-alt)}
+  .contact-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:start}
+  @media (max-width:960px){ .contact-grid{grid-template-columns:1fr} }
+  .contact-side .section-head{margin-bottom:24px}
+  .contact-info{display:flex;flex-direction:column;gap:18px;margin-top:28px}
+  .contact-info-item{display:flex;gap:14px}
+  .contact-info-item svg{width:19px;height:19px;flex:none;margin-top:2px;stroke:var(--gold-strong)}
+  .contact-info-item b{display:block;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}
+  .contact-info-item span{font-size:.98rem}
+
+  form.lead-form{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:clamp(24px,3vw,36px);box-shadow:var(--shadow-lg);
+  }
+  .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:600px){ .field-grid{grid-template-columns:1fr} }
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+  .field.full{grid-column:1/-1}
+  .field label{font-size:.82rem;font-weight:600;color:var(--text)}
+  .field .opt{font-weight:400;color:var(--text-muted);text-transform:none;letter-spacing:0}
+  .field input, .field select, .field textarea{
+    font:inherit;font-size:.95rem;padding:11px 12px;border:1px solid var(--border);border-radius:var(--radius);
+    background:var(--bg);color:var(--text);width:100%;
+  }
+  .field textarea{resize:vertical;min-height:96px}
+  .field input:focus, .field select:focus, .field textarea:focus{border-color:var(--gold);outline:2px solid var(--gold-soft);outline-offset:0}
+  .field input:invalid:not(:placeholder-shown){border-color:#B4523F}
+  .radio-row{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:2px}
+  .radio-opt{display:flex;align-items:center;gap:7px;font-size:.92rem}
+  .radio-opt input{width:auto}
+  .form-disclaimer{font-size:.8rem;color:var(--text-muted);margin-top:6px;line-height:1.55}
+  .form-status{display:none;margin-top:16px;padding:14px 16px;border-radius:var(--radius);font-size:.9rem;border:1px solid var(--border)}
+  .form-status.show{display:block}
+  .form-status.ok{background:var(--gold-soft);border-color:var(--gold-line);color:var(--text)}
+  .form-status a.copy-fallback{color:var(--gold-strong);font-weight:600;text-decoration:underline;cursor:pointer;background:none;border:none;font:inherit;padding:0}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{display:flex;flex-direction:column;gap:12px;max-width:820px}
+  .faq-item{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);overflow:hidden}
+  .faq-item summary{
+    list-style:none;cursor:pointer;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+    font-weight:600;font-size:1rem;
+  }
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary .plus{width:18px;height:18px;flex:none;position:relative}
+  .faq-item summary .plus::before, .faq-item summary .plus::after{content:"";position:absolute;background:var(--gold-strong);top:50%;left:50%;transform:translate(-50%,-50%)}
+  .faq-item summary .plus::before{width:14px;height:2px}
+  .faq-item summary .plus::after{width:2px;height:14px;transition:transform .18s ease}
+  .faq-item[open] summary .plus::after{transform:translate(-50%,-50%) rotate(90deg) scaleY(0)}
+  .faq-item .faq-a{padding:0 20px 20px;color:var(--text-muted);font-size:.94rem;max-width:70ch}
+
+  /* ---------- Final CTA ---------- */
+  .final-cta{background:var(--navy);color:var(--on-navy);text-align:center}
+  .final-cta h2{font-size:clamp(1.9rem,1.4rem + 2.2vw,2.7rem)}
+  .final-cta p{margin-top:14px;color:var(--on-navy-muted);max-width:56ch;margin-inline:auto;font-size:1.05rem}
+  .final-cta .btn{margin-top:30px}
+
+  /* ---------- Footer ---------- */
+  footer.site{background:var(--navy-deep);color:var(--on-navy-muted);padding-block:56px 32px;font-size:.88rem}
+  .footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px;padding-bottom:36px;border-bottom:1px solid rgba(244,242,233,.08)}
+  @media (max-width:760px){ .footer-grid{grid-template-columns:1fr;gap:28px} }
+  .footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .footer-brand span{font-family:"Fraunces",serif;color:var(--on-navy);font-weight:600;font-size:1.05rem}
+  .footer-tag{color:var(--on-navy-muted);max-width:38ch}
+  .footer-col h4{font-family:"Public Sans",sans-serif;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--on-navy);margin-bottom:14px}
+  .footer-col ul{display:flex;flex-direction:column;gap:10px}
+  .footer-col a{color:var(--on-navy-muted);text-decoration:none;font-size:.9rem}
+  .footer-col a:hover{color:var(--gold)}
+  .footer-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-top:24px;font-size:.8rem}
+  .footer-legal{display:flex;flex-wrap:wrap;gap:16px}
+  .footer-disclosure{margin-top:18px;font-size:.76rem;line-height:1.6;color:var(--on-navy-muted);opacity:.85;max-width:80ch}
+
+  .demo-banner{
+    background:var(--navy-deep);color:var(--on-navy-muted);text-align:center;
+    font-size:.8rem;padding:9px 16px;border-bottom:1px solid var(--gold-line);
+  }
+  .demo-banner strong{color:var(--gold)}
+</style>
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-fixflip" viewBox="0 0 64 64" fill="none" stroke="#D2AE68" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 30 30 14l26 16"/>
+    <path d="M13 27v22h34V27"/>
+    <path d="M26 49V36h12v13"/>
+    <path d="M40 18v-6h7v10"/>
+    <path d="M19 40h6M19 44h6" stroke-width="1.3"/>
+  </symbol>
+  <symbol id="ic-rental" viewBox="0 0 64 64" fill="none" stroke="#D2AE68" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="14" y="10" width="36" height="44" rx="1"/>
+    <path d="M22 19h6M36 19h6M22 28h6M36 28h6M22 37h6M36 37h6"/>
+    <path d="M27 54V44h10v10"/>
+  </symbol>
+  <symbol id="ic-bridge" viewBox="0 0 64 64" fill="none" stroke="#D2AE68" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 40c8-16 44-16 52 0"/>
+    <path d="M6 46h52"/>
+    <path d="M16 46v-9M26 46v-15M38 46v-15M48 46v-9"/>
+    <path d="M12 40l6-10M52 40l-6-10" stroke-width="1.3"/>
+  </symbol>
+  <symbol id="ic-construction" viewBox="0 0 64 64" fill="none" stroke="#D2AE68" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 54V16"/>
+    <path d="M14 18l30 8-16 6"/>
+    <path d="M28 32v22"/>
+    <path d="M8 54h40"/>
+    <path d="M40 54V40h10v14" stroke-width="1.3"/>
+  </symbol>
+  <symbol id="ic-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8" fill="currentColor" stroke="none"/>
+  </symbol>
+  <symbol id="ic-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/>
+  </symbol>
+  <symbol id="ic-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 5h16v11H8l-4 4V5z"/>
+  </symbol>
+  <symbol id="ic-flow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M7 7l10 10"/><path d="M13 6h4v4"/>
+  </symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 12.5l4.5 4.5L19 7"/>
+  </symbol>
+  <symbol id="ic-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 12h15M13 6l6 6-6 6"/>
+  </symbol>
+  <symbol id="ic-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 3h3l2 5-2.5 1.7a12 12 0 0 0 6 6L16 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z"/>
+  </symbol>
+  <symbol id="ic-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 6l9 7 9-7"/>
+  </symbol>
+  <symbol id="ic-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/>
+  </symbol>
+  <symbol id="ic-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+    <path d="M4 7h16M4 12h16M4 17h16"/>
+  </symbol>
+  <symbol id="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+    <path d="M6 6l12 12M18 6L6 18"/>
+  </symbol>
+</defs>
+</svg>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="demo-banner"><strong>Demo website</strong> — for illustrative purposes only. Demo Capital Lending is not a real, licensed lending company.</div>
+
+<header class="site">
+  <div class="wrap nav-row">
+    <a class="brand" href="#home">
+      <svg class="brand-mark" viewBox="0 0 32 32" fill="none" stroke="#D2AE68" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 17L16 7l11 10"/><path d="M8 15v10h16V15"/><path d="M13 25v-7h6v7"/>
+      </svg>
+      <span class="brand-name">Demo Capital <em>Lending</em></span>
+    </a>
+
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <label for="nav-toggle" class="nav-toggle-btn" id="nav-toggle-btn" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </label>
+
+    <nav id="primary-nav" aria-label="Primary">
+      <a href="#home">Home</a>
+      <a href="#financing">Financing Options</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#about">About</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a class="btn btn-gold" href="#contact">Request Financing</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Private Real Estate Financing</span>
+        <h1>Private Real Estate Financing for Investors</h1>
+        <p class="lede">Explore financing options for qualifying real estate investment projects.</p>
+        <div class="hero-actions">
+          <a class="btn btn-gold" href="#contact">Request Financing</a>
+          <a class="btn btn-outline-light" href="#financing">Explore Financing Options</a>
+        </div>
+        <p class="hero-note">Financing is subject to review, qualification, and applicable terms.</p>
+
+        <div class="stat-strip">
+          <div class="stat"><b>Investor-Focused</b><span>Built around real estate projects</span></div>
+          <div class="stat"><b>Project-Based Review</b><span>Evaluated on the fundamentals</span></div>
+          <div class="stat"><b>Direct Communication</b><span>A team you can reach</span></div>
+        </div>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 480 420" fill="none">
+          <rect x="40" y="150" width="70" height="230" fill="none" stroke="#D2AE68" stroke-opacity=".55" stroke-width="1.4"/>
+          <rect x="120" y="90" width="90" height="290" fill="none" stroke="#D2AE68" stroke-opacity=".8" stroke-width="1.4"/>
+          <rect x="220" y="180" width="60" height="200" fill="none" stroke="#D2AE68" stroke-opacity=".4" stroke-width="1.4"/>
+          <rect x="290" y="60" width="100" height="320" fill="none" stroke="#F4F2E9" stroke-opacity=".7" stroke-width="1.5"/>
+          <rect x="400" y="200" width="55" height="180" fill="none" stroke="#D2AE68" stroke-opacity=".55" stroke-width="1.4"/>
+          <g stroke="#D2AE68" stroke-opacity=".5" stroke-width="1">
+            <path d="M130 110h70M130 130h70M130 150h70M130 170h70M130 190h70M130 210h70M130 230h70M130 250h70M130 270h70M130 290h70M130 310h70M130 330h70M130 350h70"/>
+            <path d="M300 80h80M300 100h80M300 120h80M300 140h80M300 160h80M300 180h80M300 200h80M300 220h80M300 240h80M300 260h80M300 280h80M300 300h80M300 320h80M300 340h80M300 360h80"/>
+          </g>
+          <path d="M20 380h440" stroke="#F4F2E9" stroke-opacity=".25" stroke-width="1"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINANCING OPTIONS -->
+  <section id="financing">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Financing Options</span>
+        <h2>Financing Options</h2>
+        <p>Financing structured around the project, built for investors who move on real estate opportunities.</p>
+      </div>
+
+      <div class="card-grid">
+        <article class="fcard">
+          <div class="fcard-art"><svg viewBox="0 0 64 64"><use href="#ic-fixflip"/></svg></div>
+          <div class="fcard-body">
+            <div class="fcard-goldline"></div>
+            <h3>Fix &amp; Flip</h3>
+            <p>Financing for qualifying property acquisition and renovation projects.</p>
+            <button type="button" class="fcard-cta" data-project="Fix & Flip">Learn More <svg viewBox="0 0 24 24"><use href="#ic-arrow"/></svg></button>
+          </div>
+        </article>
+
+        <article class="fcard">
+          <div class="fcard-art"><svg viewBox="0 0 64 64"><use href="#ic-rental"/></svg></div>
+          <div class="fcard-body">
+            <div class="fcard-goldline"></div>
+            <h3>Rental Properties</h3>
+            <p>Financing options for qualifying rental-property investment projects.</p>
+            <button type="button" class="fcard-cta" data-project="Rental Property">Learn More <svg viewBox="0 0 24 24"><use href="#ic-arrow"/></svg></button>
+          </div>
+        </article>
+
+        <article class="fcard">
+          <div class="fcard-art"><svg viewBox="0 0 64 64"><use href="#ic-bridge"/></svg></div>
+          <div class="fcard-body">
+            <div class="fcard-goldline"></div>
+            <h3>Bridge Financing</h3>
+            <p>Short-term financing options for qualifying real estate investment opportunities.</p>
+            <button type="button" class="fcard-cta" data-project="Bridge Financing">Learn More <svg viewBox="0 0 24 24"><use href="#ic-arrow"/></svg></button>
+          </div>
+        </article>
+
+        <article class="fcard">
+          <div class="fcard-art"><svg viewBox="0 0 64 64"><use href="#ic-construction"/></svg></div>
+          <div class="fcard-body">
+            <div class="fcard-goldline"></div>
+            <h3>Ground-Up Construction</h3>
+            <p>Financing options for qualifying new construction projects.</p>
+            <button type="button" class="fcard-cta" data-project="Ground-Up Construction">Learn More <svg viewBox="0 0 24 24"><use href="#ic-arrow"/></svg></button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works" class="surface-alt-section" style="background:var(--surface-alt)">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Process</span>
+        <h2>How It Works</h2>
+        <p>A straightforward path from initial submission to closing.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">01</span>
+          <h3>Submit Your Project</h3>
+          <p>Tell us about the property, project, and financing needs.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">02</span>
+          <h3>Review &amp; Qualification</h3>
+          <p>Our team reviews the project and available information.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">03</span>
+          <h3>Discuss Financing Options</h3>
+          <p>Explore potential financing structures based on the project.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">04</span>
+          <h3>Move Toward Closing</h3>
+          <p>Once terms are agreed upon and requirements are satisfied, proceed toward closing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="band">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">About Demo Capital Lending</span>
+        <h2>About Demo Capital Lending</h2>
+      </div>
+
+      <div class="about-grid">
+        <div>
+          <p>Demo Capital Lending focuses on private real estate financing for investors and qualifying projects. Rather than a one-size-fits-all approach, financing is considered on a project-by-project basis, evaluated around the specifics of the property and the plan behind it.</p>
+          <p>The goal is straightforward: give real estate investors, builders, and developers a private financing partner who understands investment projects and communicates clearly at every stage of the process.</p>
+        </div>
+
+        <div class="about-points">
+          <div class="about-point">
+            <svg viewBox="0 0 24 24"><use href="#ic-target"/></svg>
+            <div><b>Real Estate Investor Focus</b><span>Built specifically around investment and development projects.</span></div>
+          </div>
+          <div class="about-point">
+            <svg viewBox="0 0 24 24"><use href="#ic-layers"/></svg>
+            <div><b>Project-Based Financing</b><span>Structured around the property and the plan for it.</span></div>
+          </div>
+          <div class="about-point">
+            <svg viewBox="0 0 24 24"><use href="#ic-chat"/></svg>
+            <div><b>Clear Communication</b><span>Direct answers at each stage of review.</span></div>
+          </div>
+          <div class="about-point">
+            <svg viewBox="0 0 24 24"><use href="#ic-flow"/></svg>
+            <div><b>Efficient, Relationship-Focused Process</b><span>A process built to move without losing the personal connection.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Why Demo Capital Lending</span>
+        <h2>Built Around Real Estate Investors</h2>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature">
+          <svg viewBox="0 0 24 24"><use href="#ic-target"/></svg>
+          <h3>Investor-Focused</h3>
+          <p>Financing considered around the needs of real estate investors and their projects.</p>
+        </div>
+        <div class="feature">
+          <svg viewBox="0 0 24 24"><use href="#ic-layers"/></svg>
+          <h3>Flexible Financing Solutions</h3>
+          <p>Options explored around the structure and stage of the project.</p>
+        </div>
+        <div class="feature">
+          <svg viewBox="0 0 24 24"><use href="#ic-chat"/></svg>
+          <h3>Clear Communication</h3>
+          <p>Straightforward updates throughout review and discussion.</p>
+        </div>
+        <div class="feature">
+          <svg viewBox="0 0 24 24"><use href="#ic-flow"/></svg>
+          <h3>Streamlined Process</h3>
+          <p>A process designed to move efficiently from submission to closing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT TYPES -->
+  <section style="background:var(--surface-alt)">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Project Types</span>
+        <h2>What We Finance</h2>
+      </div>
+
+      <div class="types-list">
+        <div class="type-row"><span>Fix &amp; Flip</span><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>
+        <div class="type-row"><span>Rental Properties</span><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>
+        <div class="type-row"><span>Bridge Financing</span><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>
+        <div class="type-row"><span>Ground-Up Construction</span><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>
+        <div class="type-row" style="grid-column:1/-1"><span>Other Qualifying Real Estate Investment Projects</span><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / LEAD FORM -->
+  <section id="contact" class="contact">
+    <div class="wrap contact-grid">
+      <div class="contact-side">
+        <div class="section-head">
+          <span class="eyebrow">Get In Touch</span>
+          <h2>Have a Real Estate Project to Finance?</h2>
+          <p>Tell us about your project and financing needs. Our team can review the information and discuss potential options.</p>
+        </div>
+
+        <div class="contact-info">
+          <div class="contact-info-item">
+            <svg viewBox="0 0 24 24"><use href="#ic-phone"/></svg>
+            <div><b>Phone</b><span><a href="tel:+14534343216" style="color:inherit;text-decoration:none">+1 453-434-3216</a></span></div>
+          </div>
+          <div class="contact-info-item">
+            <svg viewBox="0 0 24 24"><use href="#ic-mail"/></svg>
+            <div><b>Email</b><span><a href="mailto:leads@democapitallending.com" style="color:inherit;text-decoration:none">leads@democapitallending.com</a></span></div>
+          </div>
+          <div class="contact-info-item">
+            <svg viewBox="0 0 24 24"><use href="#ic-pin"/></svg>
+            <div><b>Office</b><span>Dallas, Texas</span></div>
+          </div>
+        </div>
+      </div>
+
+      <form class="lead-form" id="lead-form" novalidate>
+        <div class="field-grid">
+          <div class="field">
+            <label for="f-name">Full Name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone</label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel" required>
+          </div>
+          <div class="field">
+            <label for="f-contact-method">Preferred Contact Method</label>
+            <select id="f-contact-method" name="contactMethod" required>
+              <option value="" disabled selected>Select one</option>
+              <option>Phone</option>
+              <option>Email</option>
+              <option>Text</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="f-location">Property Location</label>
+            <input id="f-location" name="location" type="text" placeholder="City, State" required>
+          </div>
+          <div class="field">
+            <label for="f-property-type">Property Type</label>
+            <select id="f-property-type" name="propertyType" required>
+              <option value="" disabled selected>Select one</option>
+              <option>Single-Family Residence</option>
+              <option>2–4 Unit Multi-Family</option>
+              <option>5+ Unit Multi-Family</option>
+              <option>Condo / Townhome</option>
+              <option>Mixed-Use</option>
+              <option>Commercial</option>
+              <option>Land</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="f-project-type">Project Type</label>
+            <select id="f-project-type" name="projectType" required>
+              <option value="" disabled selected>Select one</option>
+              <option>Fix &amp; Flip</option>
+              <option>Rental Property</option>
+              <option>Bridge Financing</option>
+              <option>Ground-Up Construction</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-financing-amount">Amount of Financing Requested</label>
+            <input id="f-financing-amount" name="financingAmount" type="text" inputmode="numeric" placeholder="$" required>
+          </div>
+
+          <div class="field">
+            <label for="f-purchase-price">Estimated Purchase Price <span class="opt">(if applicable)</span></label>
+            <input id="f-purchase-price" name="purchasePrice" type="text" inputmode="numeric" placeholder="$">
+          </div>
+          <div class="field">
+            <label for="f-reno-budget">Est. Renovation / Construction Budget</label>
+            <input id="f-reno-budget" name="renoBudget" type="text" inputmode="numeric" placeholder="$">
+          </div>
+
+          <div class="field full">
+            <label for="f-arv">Estimated Property Value <span class="opt">(after repair / completion)</span></label>
+            <input id="f-arv" name="estimatedValue" type="text" inputmode="numeric" placeholder="$">
+          </div>
+
+          <div class="field full">
+            <label for="f-description">Brief Project Description</label>
+            <textarea id="f-description" name="description" placeholder="Tell us about the property and the project"></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-gold btn-block" id="lead-submit">Request Financing</button>
+
+        <p class="form-disclaimer">Submitting this form does not guarantee approval or financing. Financing is subject to review, qualification, and applicable terms.</p>
+
+        <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Frequently Asked Questions</span>
+        <h2>FAQ</h2>
+      </div>
+
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>What types of real estate projects do you finance?<span class="plus"></span></summary>
+          <div class="faq-a">Demo Capital Lending considers financing for qualifying fix &amp; flip, rental property, bridge, and ground-up construction projects, along with other qualifying real estate investment projects.</div>
+        </details>
+        <details class="faq-item">
+          <summary>What is private real estate lending?<span class="plus"></span></summary>
+          <div class="faq-a">Private real estate lending refers to financing provided outside of traditional bank channels, typically evaluated around the property and the specifics of the investment project rather than a standardized retail lending process.</div>
+        </details>
+        <details class="faq-item">
+          <summary>How does the financing process work?<span class="plus"></span></summary>
+          <div class="faq-a">The process generally follows four stages: submitting your project, review and qualification, discussing available financing options, and moving toward closing once terms are agreed upon and requirements are satisfied.</div>
+        </details>
+        <details class="faq-item">
+          <summary>What information do you need to review a project?<span class="plus"></span></summary>
+          <div class="faq-a">Generally, details about the property, the project plan, and the financing being requested. The lead form on this page collects the core information our team uses to begin a review.</div>
+        </details>
+        <details class="faq-item">
+          <summary>How quickly can a project be reviewed?<span class="plus"></span></summary>
+          <div class="faq-a">Review timelines vary by project. [Add specific review or response timelines here once available.]</div>
+        </details>
+        <details class="faq-item">
+          <summary>What property types do you consider?<span class="plus"></span></summary>
+          <div class="faq-a">Property types considered include single-family residences, multi-family properties, condos and townhomes, mixed-use, commercial, and land, among other qualifying property types.</div>
+        </details>
+        <details class="faq-item">
+          <summary>How can I request financing?<span class="plus"></span></summary>
+          <div class="faq-a">Use the lead form on this page, or the contact information in the footer, to submit your project details to our team.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <div class="wrap">
+      <h2>Ready to Discuss Your Next Project?</h2>
+      <p>Submit your project details and connect with Demo Capital Lending to explore potential financing options.</p>
+      <a class="btn btn-gold" href="#contact">Request Financing</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" stroke="#D2AE68" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 17L16 7l11 10"/><path d="M8 15v10h16V15"/><path d="M13 25v-7h6v7"/>
+          </svg>
+          <span>Demo Capital Lending</span>
+        </div>
+        <p class="footer-tag">Private Real Estate Financing for Investors</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#financing">Financing Options</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+14534343216">+1 453-434-3216</a></li>
+          <li><a href="mailto:leads@democapitallending.com">leads@democapitallending.com</a></li>
+          <li>Dallas, Texas</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> Demo Capital Lending. All rights reserved.</span>
+      <div class="footer-legal">
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms &amp; Conditions</a>
+        <a href="#licensing">Licensing &amp; Disclosures</a>
+      </div>
+    </div>
+
+    <p class="footer-disclosure"><strong>Demo website:</strong> This site is a sample built for demonstration purposes only. Demo Capital Lending is not a real, licensed lending company, and no submission made here results in an actual financing offer or review. [Add applicable licensing information, NMLS or state license numbers, and required lending disclosures here before any real-world use.] In an operating version of this site: Demo Capital Lending provides private financing for qualifying real estate investment projects; all financing is subject to underwriting review, qualification, and applicable terms and conditions; this website does not constitute a commitment to lend.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  // Year
+  var y = document.getElementById("year");
+  if (y) y.textContent = new Date().getFullYear();
+
+  // Mobile nav: close on link click
+  var toggle = document.getElementById("nav-toggle");
+  var navLinks = document.querySelectorAll("#primary-nav a");
+  navLinks.forEach(function(a){
+    a.addEventListener("click", function(){ if (toggle) toggle.checked = false; });
+  });
+
+  // Sticky header elevation
+  var header = document.querySelector("header.site");
+  var onScroll = function(){
+    if (!header) return;
+    if (window.scrollY > 8) header.style.boxShadow = "0 8px 24px rgba(0,0,0,.18)";
+    else header.style.boxShadow = "none";
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  // "Learn More" -> prefill Project Type + scroll to form
+  var projectSelect = document.getElementById("f-project-type");
+  document.querySelectorAll(".fcard-cta").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var val = btn.getAttribute("data-project");
+      if (projectSelect && val) {
+        for (var i = 0; i < projectSelect.options.length; i++) {
+          if (projectSelect.options[i].text.replace(/\s+/g," ").trim() === val.replace(/\s+/g," ").trim()) {
+            projectSelect.selectedIndex = i;
+            break;
+          }
+        }
+      }
+      var target = document.getElementById("contact");
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      var nameField = document.getElementById("f-name");
+      if (nameField) window.setTimeout(function(){ nameField.focus(); }, 500);
+    });
+  });
+
+  // ---- Lead form submission ----
+  // NOTE FOR DEMO CAPITAL LENDING: this form has no backend. On submit it
+  // composes a pre-filled email (via the visitor's own email client) so the
+  // page works the moment it's published, with zero configuration.
+  // To capture submissions automatically instead, connect a form service
+  // (e.g. Formspree, HubSpot, Netlify Forms) and replace the submit handler
+  // below with a fetch() POST to that service's endpoint.
+  var COMPANY_EMAIL = "leads@democapitallending.com";
+
+  var form = document.getElementById("lead-form");
+  var statusEl = document.getElementById("form-status");
+  var submitBtn = document.getElementById("lead-submit");
+
+  function fieldLabel(name){
+    var map = {
+      name:"Full Name", email:"Email", phone:"Phone", contactMethod:"Preferred Contact Method",
+      location:"Property Location", propertyType:"Property Type", projectType:"Project Type",
+      financingAmount:"Amount of Financing Requested", purchasePrice:"Estimated Purchase Price",
+      renoBudget:"Estimated Renovation/Construction Budget", estimatedValue:"Estimated Property Value",
+      description:"Brief Project Description"
+    };
+    return map[name] || name;
+  }
+
+  function buildSummary(data){
+    var order = ["name","email","phone","contactMethod","location","propertyType","projectType",
+      "financingAmount","purchasePrice","renoBudget","estimatedValue","description"];
+    return order.map(function(k){
+      var v = (data[k] || "").toString().trim();
+      return fieldLabel(k) + ": " + (v || "—");
+    }).join("\n");
+  }
+
+  if (form) {
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+
+      var fd = new FormData(form);
+      var data = {};
+      fd.forEach(function(v,k){ data[k] = v; });
+
+      var summary = buildSummary(data);
+      var subject = "Financing Request – " + (data.location || "New Project");
+      var body = "New financing request submitted via democapitallending.com\n\n" + summary +
+        "\n\nSubmitting this form does not guarantee approval or financing.";
+
+      var mailto = "mailto:" + encodeURIComponent(COMPANY_EMAIL) +
+        "?subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body);
+
+      if (submitBtn) submitBtn.setAttribute("disabled", "true");
+
+      try { window.location.href = mailto; } catch (err) { /* ignore */ }
+
+      if (statusEl) {
+        statusEl.innerHTML = "An email draft with your project details has been created in your email app. " +
+          "Please review and send it to complete your request. If nothing opened, " +
+          '<button type="button" class="copy-fallback" id="copy-summary">copy your project details</button> and send them directly.';
+        statusEl.classList.add("show", "ok");
+
+        var copyBtn = document.getElementById("copy-summary");
+        if (copyBtn) {
+          copyBtn.addEventListener("click", function(){
+            try {
+              navigator.clipboard.writeText(subject + "\n\n" + summary).then(function(){
+                copyBtn.textContent = "Copied";
+              });
+            } catch (err) { /* clipboard unavailable; no-op */ }
+          });
+        }
+      }
+
+      if (submitBtn) window.setTimeout(function(){ submitBtn.removeAttribute("disabled"); }, 1200);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
