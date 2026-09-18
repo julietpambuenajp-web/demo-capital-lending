@@ -977,7 +977,10 @@
         "&body=" + encodeURIComponent(body);
 
       if (submitBtn) submitBtn.setAttribute("disabled", "true");
-
+gtag('event', 'generate_lead', {
+  event_category: 'lead_generation',
+  event_label: 'financing_request'
+});
       try { window.location.href = mailto; } catch (err) { /* ignore */ }
 
       if (statusEl) {
